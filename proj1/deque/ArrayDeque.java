@@ -74,7 +74,7 @@ public class ArrayDeque<Item> {
         if (isEmpty()) {
             return null;
         }
-        int lastIndex = (last + items.length) % items.length
+        int lastIndex = (last + items.length) % items.length;
         Item lastItem = items[lastIndex];
         items[lastIndex] = null;
         last = (last - 1 + items.length) % items.length;
