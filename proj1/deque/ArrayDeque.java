@@ -64,6 +64,7 @@ public class ArrayDeque<Item> {
             return null;
         }
         Item firstItem = items[first];
+        items[first] = null;
         first = (first + 1) % items.length;
         size -= 1;
         return firstItem;
@@ -73,7 +74,9 @@ public class ArrayDeque<Item> {
         if (isEmpty()) {
             return null;
         }
-        Item lastItem = items[last];
+        int lastIndex = (last + items.length) % items.length
+        Item lastItem = items[lastIndex];
+        items[lastIndex] = null;
         last = (last - 1 + items.length) % items.length;
         size -= 1;
         return lastItem;
