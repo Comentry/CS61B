@@ -18,10 +18,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     private void resize(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
         int index = 0;
-        for (int i = first; i != (last+ items.length)%items.length; i = (i + 1) % items.length) {
+        for (int i = first; i != (last + items.length) % items.length; i = (i + 1) % items.length) {
             newArray[index++] = items[i];
         }
-        newArray[index] = items[(last+ items.length)%items.length];
+        newArray[index] = items[(last + items.length) % items.length];
         first = 0;
         last = index;
         items = newArray;
@@ -54,11 +54,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
 
     @Override
     public void printDeque() {
-        for (int i = first; i != (last+ items.length)%items.length; i = (i + 1) % items.length) {
+        for (int i = first; i != (last + items.length) % items.length; i = (i + 1) % items.length) {
             System.out.print(items[i]);
             System.out.println(' ');
         }
-        System.out.println(items[(last+ items.length)%items.length]);
+        System.out.println(items[(last + items.length) % items.length]);
     }
 
     @Override

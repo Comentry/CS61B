@@ -12,8 +12,6 @@ public interface Deque<T> {
         return false;
     }
 
-    ;
-
     int size();
 
     void printDeque();
