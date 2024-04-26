@@ -100,18 +100,22 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
         if (this == o) {
             return true;
         }
-        if (o instanceof ArrayDeque otherArrayDeque) {
-            if (this.size != otherArrayDeque.size) {
+        if(o==null) {
+            return false;
+        }
+        if(o.getClass()!=this.getClass()) {
+            return false;
+        }
+        ArrayDeque other = (ArrayDeque) o;
+        if (this.size != other.size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (this.get(i) != other.get(i)) {
                 return false;
             }
-            for (int i = 0; i < size; i++) {
-                if (this.get(i) != otherArrayDeque.get(i)) {
-                    return false;
-                }
-            }
-            return true;
         }
-        return false;
+        return true;
     }
 
     public Iterator<Item> iterator() {
