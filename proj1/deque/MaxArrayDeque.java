@@ -20,10 +20,10 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return maxItem;
     }
 
-    public T max(Comparator<T> comparator) {
+    public T max(Comparator<T> customizeComparator) {
         T maxItem = this.get(0);
         for (T item : this) {
-            if (comparator.compare(maxItem, item) < 0) {
+            if (customizeComparator.compare(maxItem, item) < 0) {
                 maxItem = item;
             }
         }

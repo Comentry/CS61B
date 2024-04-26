@@ -110,11 +110,11 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return getRecursive(sentinel.next, index);
     }
 
-    private T getRecursive(Node sentinel, int index) {
+    private T getRecursive(Node node, int index) {
         if (index == 0) {
-            return sentinel.item;
+            return node.item;
         }
-        return getRecursive(sentinel.next, index - 1);
+        return getRecursive(node.next, index - 1);
     }
 
     private class LinkedListDequeIterator implements Iterator<T> {
@@ -161,7 +161,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         Node p = this.sentinel.next;
         Node q = o.sentinel.next;
         while (p != this.sentinel) {
-            if (p.item != q.item) {
+            if (!p.item.equals(q.item)) {
                 return false;
             }
             p = p.next;
