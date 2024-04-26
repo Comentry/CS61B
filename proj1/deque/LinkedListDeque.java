@@ -6,7 +6,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     private Node sentinel;
     private int size;
 
-    private class Node {
+    class Node {
         private T item;
         private Node prev;
         private Node next;
@@ -117,7 +117,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return getRecursive(node.next, index - 1);
     }
 
-    private class LinkedListDequeIterator implements Iterator<T> {
+    class LinkedListDequeIterator implements Iterator<T> {
 
         private Node p;
 
