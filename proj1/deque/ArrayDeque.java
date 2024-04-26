@@ -2,33 +2,33 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
-    private Item[] items;
+public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
+    private T[] items;
     private int size;
     private int first;
     private int last;
 
     public ArrayDeque() {
-        items = (Item[]) new Object[8];
+        items = (T[]) new Object[8];
         size = 0;
         first = 0;
         last = -1;
     }
 
     private void resize(int capacity) {
-        Item[] newArray = (Item[]) new Object[capacity];
+        T[] newArray = (T[]) new Object[capacity];
         int index = 0;
-        for (int i = first; i != last; i = (i + 1) % items.length) {
+        for (int i = first; i != (last+ items.length)%items.length; i = (i + 1) % items.length) {
             newArray[index++] = items[i];
         }
-        newArray[index] = items[last];
+        newArray[index] = items[(last+ items.length)%items.length];
         first = 0;
         last = index;
         items = newArray;
     }
 
     @Override
-    public void addFirst(Item item) {
+    public void addFirst(T item) {
         if (size == items.length) {
             resize(size * 2);
         }
@@ -38,7 +38,7 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
     }
 
     @Override
-    public void addLast(Item item) {
+    public void addLast(T item) {
         if (size == items.length) {
             resize(size * 2);
         }
@@ -54,19 +54,19 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
 
     @Override
     public void printDeque() {
-        for (int i = first; i != last; i = (i + 1) % items.length) {
+        for (int i = first; i != (last+ items.length)%items.length; i = (i + 1) % items.length) {
             System.out.print(items[i]);
             System.out.println(' ');
         }
-        System.out.println(items[last]);
+        System.out.println(items[(last+ items.length)%items.length]);
     }
 
     @Override
-    public Item removeFirst() {
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-        Item firstItem = items[first];
+        T firstItem = items[first];
         items[first] = null;
         first = (first + 1) % items.length;
         size -= 1;
@@ -74,12 +74,12 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
     }
 
     @Override
-    public Item removeLast() {
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         }
         int lastIndex = (last + items.length) % items.length;
-        Item lastItem = items[lastIndex];
+        T lastItem = items[lastIndex];
         items[lastIndex] = null;
         last = (last - 1 + items.length) % items.length;
         size -= 1;
@@ -87,7 +87,7 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
     }
 
     @Override
-    public Item get(int index) {
+    public T get(int index) {
         if (size <= index) {
             return null;
         }
@@ -100,10 +100,10 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
         if (this == o) {
             return true;
         }
-        if(o==null) {
+        if (o == null) {
             return false;
         }
-        if(o.getClass()!=this.getClass()) {
+        if (o.getClass() != this.getClass()) {
             return false;
         }
         ArrayDeque other = (ArrayDeque) o;
@@ -118,11 +118,11 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
         return true;
     }
 
-    public Iterator<Item> iterator() {
+    public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }
 
-    private class ArrayDequeIterator implements Iterator<Item> {
+    private class ArrayDequeIterator implements Iterator<T> {
 
         private int index;
 
@@ -136,8 +136,8 @@ public class ArrayDeque<Item> implements Iterable<Item>, Deque<Item> {
         }
 
         @Override
-        public Item next() {
-            Item returnItem = get(index);
+        public T next() {
+            T returnItem = get(index);
             index += 1;
             return returnItem;
         }
