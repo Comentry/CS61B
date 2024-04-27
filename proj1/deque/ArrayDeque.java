@@ -109,11 +109,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if (other == null) {
             return false;
         }
-        if (this.getClass() != other.getClass()) {
+        if (!(other instanceof Deque)) {
             return false;
         }
-        ArrayDeque o = (ArrayDeque) other;
-        if (this.size != o.size) {
+        Deque<T> o = (Deque<T>) other;
+        if (this.size() != o.size()) {
             return false;
         }
         for (int i = 0; i < size; i++) {
