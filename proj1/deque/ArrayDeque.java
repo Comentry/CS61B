@@ -66,6 +66,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if (isEmpty()) {
             return null;
         }
+        if ((size < items.length / 4) && (size > 8)) {
+            resize(items.length / 2);
+        }
         T firstItem = items[first];
         items[first] = null;
         first = (first + 1) % items.length;
@@ -77,6 +80,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     public T removeLast() {
         if (isEmpty()) {
             return null;
+        }
+        if ((size < items.length / 4) && (size > 8)) {
+            resize(items.length / 2);
         }
         int lastIndex = (last + items.length) % items.length;
         T lastItem = items[lastIndex];
@@ -96,22 +102,22 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (o == null) {
+        if (other == null) {
             return false;
         }
-        if (o.getClass() != this.getClass()) {
+        if (!(other instanceof Deque)) {
             return false;
         }
-        ArrayDeque other = (ArrayDeque) o;
-        if (this.size != other.size) {
+        ArrayDeque o = (ArrayDeque) other;
+        if (this.size != o.size) {
             return false;
         }
         for (int i = 0; i < size; i++) {
-            if (!this.get(i).equals(other.get(i))) {
+            if (!this.get(i).equals(o.get(i))) {
                 return false;
             }
         }
