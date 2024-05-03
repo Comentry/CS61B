@@ -114,48 +114,97 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Set<K> keySet() {
-        TreeSet<V> resultSet = new TreeSet<>();
+        TreeSet<K> resultSet = new TreeSet<>();
         keySet(resultSet, root);
         return (Set) resultSet;
 
     }
 
-    private void keySet(TreeSet<V> set, BSTNode node) {
+    private void keySet(TreeSet<K> set, BSTNode node) {
         if (node == null) {
             return;
         }
-        set.add(node.value);
+        set.add(node.key);
         keySet(set, node.left);
         keySet(set, node.right);
     }
 
-    public void printInOrder(){
+    public void printInOrder() {
         printInOrder(root);
     }
 
     private void printInOrder(BSTNode node) {
-        if(node==null) {
+        if (node == null) {
             return;
         }
         printInOrder(node.left);
-        System.out.format("[%s->%s]",node.key,node.value);
+        System.out.format("[%s->%s]", node.key, node.value);
         printInOrder(node.right);
     }
-    
+
 
     @Override
-    public V remove(K key) throws UnsupportedOperationException {
+    public V remove(K key) {
+        if (containsKey(key)) {
+            V targetValue = get(key);
+            root = remove(root, key);
+            size = size - 1;
+            return targetValue;
+        }
         return null;
+    }
+
+    private BSTNode remove(BSTNode node, K key) {
+        if (node == null) {
+            return null;
+        }
+        int cmp = key.compareTo(node.key);
+        if (cmp > 0) {
+            node.right = remove(node.right, key);
+        } else if (cmp < 0) {
+            node.left = remove(node.left, key);
+        } else {
+            if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
+            } else {
+                BSTNode originalNode = node;
+                node = getMaxChild(node.left);
+                node.right = originalNode.right;
+                node.left = remove(originalNode.left, node.key);
+            }
+        }
+        return node;
+    }
+
+    private BSTNode getMaxChild(BSTNode node) {
+        if (node.right == null) {
+            return node;
+        }
+        return getMaxChild(node.right);
     }
 
 
     @Override
-    public V remove(K key, V value) throws UnsupportedOperationException {
+    public V remove(K key, V value) {
+        if (containsKey(key)) {
+            V targetValue = get(key);
+            if (value.equals(targetValue)) {
+                root = remove(root, key);
+                size = size - 1;
+                return targetValue;
+            } else {
+                return null;
+            }
+        }
         return null;
     }
 
     @Override
-    public Iterator<K> iterator() throws UnsupportedOperationException {
-        return null;
+    public Iterator<K> iterator() {
+        return keySet().iterator();
     }
+
+
 }
