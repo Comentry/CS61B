@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class BSTMap<K extends Comparable, V> implements Map61B<K, V> {
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private int size;
     private BSTNode root;
 
@@ -31,7 +31,7 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V> {
         root = null;
     }
 
-    public void clear(BSTNode node) {
+    private void clear(BSTNode node) {
         if (node == null) {
             return;
         } else {
@@ -128,6 +128,20 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V> {
         keySet(set, node.left);
         keySet(set, node.right);
     }
+
+    public void printInOrder(){
+        printInOrder(root);
+    }
+
+    private void printInOrder(BSTNode node) {
+        if(node==null) {
+            return;
+        }
+        printInOrder(node.left);
+        System.out.format("[%s->%s]",node.key,node.value);
+        printInOrder(node.right);
+    }
+    
 
     @Override
     public V remove(K key) throws UnsupportedOperationException {
