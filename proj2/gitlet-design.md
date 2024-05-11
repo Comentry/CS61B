@@ -1,10 +1,10 @@
 # Gitlet Design Document
 
-**Name**:
+**Name**:Cambrain
 
 ## Classes and Data Structures
 
-### Class 1
+### Commit
 
 #### Fields
 
