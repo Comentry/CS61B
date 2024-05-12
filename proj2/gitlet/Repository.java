@@ -21,7 +21,7 @@ public class Repository {
     public static final File MASTER = join(BRANCH_DIR, "master");
     public static final File HEAD = join(GITLET_DIR, "HEAD");
 
-    public static void init() throws IOException {
+    public static void init()  {
         if (GITLET_DIR.exists()) {
             System.out.println("A Gitlet version-control system already exists in the current directory.");
             System.exit(0);
@@ -39,18 +39,22 @@ public class Repository {
     }
 
     //创建所需文件夹
-    private static void creatDir() throws IOException {
+    private static void creatDir()  {
         GITLET_DIR.mkdir();
         Blob.BLOB_DIR.mkdir();
         COMMIT_DIR.mkdir();
         BRANCH_DIR.mkdir();
-        ADD_DIR.createNewFile();
-        REMOVE_DIR.createNewFile();
-        HEAD.createNewFile();
-        MASTER.createNewFile();
+        try {
+            ADD_DIR.createNewFile();
+            REMOVE_DIR.createNewFile();
+            HEAD.createNewFile();
+            MASTER.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static void addCommand(String fileName) throws IOException {
+    public static void addCommand(String fileName)  {
         //添加文件不存在
         File file = new File(fileName);
         if (!file.exists()) {
@@ -94,7 +98,7 @@ public class Repository {
         return readObject(commitFile, Commit.class);
     }
 
-    public static void commitCommand(String message) throws IOException {
+    public static void commitCommand(String message)  {
         if (message.equals("")) {
             System.out.println("Please enter a commit message.");
             System.exit(0);
@@ -124,7 +128,11 @@ public class Repository {
         //提交commit
         String commitID = commit.getUID();
         File commitFile = join(COMMIT_DIR, commitID);
-        commitFile.createNewFile();
+        try {
+            commitFile.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         writeObject(commitFile, commit);
         //修改当前branch
         File branchFile = join(BRANCH_DIR, readContentsAsString(HEAD));
@@ -253,9 +261,13 @@ public class Repository {
     }
 
     //创建分支
-    public static void branchCommand(String branchName) throws IOException {
+    public static void branchCommand(String branchName)  {
         File branch = join(BRANCH_DIR,branchName);
-        branch.createNewFile();
+        try {
+            branch.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         writeContents(branch,getCurrentCommitID());
         writeContents(HEAD,branchName);
     }

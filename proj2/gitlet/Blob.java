@@ -24,11 +24,15 @@ public class Blob implements Serializable {
     }
 
     //将blob内容写入blobID文件中
-    public File creatFile() throws IOException {
+    public File creatFile()  {
         //存入BOLB_DIR中,写入blobID中
         String blobID = getID();
         File blobFile = join(BLOB_DIR,blobID);
-        blobFile.createNewFile();
+        try {
+            blobFile.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return blobFile;
     }
 }

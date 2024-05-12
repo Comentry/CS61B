@@ -52,7 +52,7 @@ public class Stage {
     }
 
     //添加到暂存区
-    public File addFile(Blob blob) throws IOException {
+    public File addFile(Blob blob)  {
         //文件转化为blob对象
         File blobFile = blob.creatFile();
         writeContents(blobFile, blob.fileContent);
