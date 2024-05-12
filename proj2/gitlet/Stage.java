@@ -13,7 +13,7 @@ public class Stage {
     File addStage, removeStage;
     TreeMap<String, String> addMap;
     ArrayList<String> removeList;
-    public static final String CRLF ="\r\n";
+    public static final String CRLF = "\r\n";
 
     public Stage() {
         addMap = new TreeMap<>();
@@ -63,7 +63,7 @@ public class Stage {
     public void updateFile(File file) throws IOException {
         Blob blob = new Blob(file);
         File blobFile = blob.creatFile();
-        writeContents(blobFile,blob.fileContent);
+        writeContents(blobFile, blob.fileContent);
         String blobID = blob.getID();
         addMap.put(blob.fileName, blobID);
         StringBuilder sb = new StringBuilder();
@@ -83,15 +83,17 @@ public class Stage {
             String value = entry.getValue();
             sb.append(key).append(" ").append(value).append(CRLF);
         }
-        writeContents(addStage,sb.toString());
+        writeContents(addStage, sb.toString());
     }
 
     //将removeList内容写入removestage
     public void writeRemoveContent() {
-        StringBuilder sb =new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for (String filename : removeList) {
-            sb.append(filename).append(CRLF);
+            if (!filename.isEmpty()) {
+                sb.append(filename).append(CRLF);
+            }
         }
-        writeContents(removeStage,sb.toString());
+        writeContents(removeStage, sb.toString());
     }
 }

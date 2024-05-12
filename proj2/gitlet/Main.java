@@ -25,16 +25,16 @@ public class Main {
                 Repository.init();
                 break;
             case "add":
-                Repository.add(args[1]);
+                Repository.addCommand(args[1]);
                 break;
             case "commit":
-                Repository.commit(args[1]);
+                Repository.commitCommand(args[1]);
                 break;
             case "rm":
-                Repository.rm(args[1]);
+                Repository.rmCommand(args[1]);
                 break;
             case "global-log":
-                Repository.printLog();
+                Repository.logCommand();
                 break;
         }
     }

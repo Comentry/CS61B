@@ -25,9 +25,9 @@ public class Commit implements Serializable {
      */
 
 
-    private String message;     //The message of this Commit.
-    private String date;
-    private String parent;      // The last commit reference
+    public String message;     //The message of this Commit.
+    public String date;
+    public String parent;      // The last commit reference
     /**
      * Map<Filename,BlobUID>
      * 存储跟踪文件，序列化id
